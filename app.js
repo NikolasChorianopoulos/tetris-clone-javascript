@@ -1,0 +1,57 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const grid = document.querySelector(".grid");
+  let squares = Array.from(document.querySelectorAll(".grid div"));
+  const ScoreDisplay = document.querySelector("#score");
+  const StartButton = document.querySelector("#start-button");
+  const width = 10;
+
+  //tetris shapes
+  const lTetromino = [
+    [1, width + 1, width * 2 + 1, 2],
+    [width, width + 1, width + 2, width * 2 + 2],
+    [1, width + 1, width * 2 + 1, width * 2],
+    [width, width * 2, width * 2 + 1, width * 2 + 2],
+  ];
+
+  const oTetromino = [
+    [1, 2, width + 1, width + 2],
+    [1, 2, width + 1, width + 2],
+    [1, 2, width + 1, width + 2],
+    [1, 2, width + 1, width + 2],
+  ];
+
+  const iTetromino = [
+    [1, width + 1, width * 2 + 1, width * 3 + 1],
+    [width, width + 1, width + 2, width + 3],
+    [0, width, width * 2, width * 3],
+    [1, width + 1, width * 2 + 1, width * 3 + 1],
+  ];
+
+  const tTetromino = [
+    [1, width, width + 1, width + 2],
+    [1, width + 1, width * 2 + 1, width + 2],
+    [width, width + 1, width + 2, width * 2 + 1],
+    [1, width, width + 1, width * 2 + 1],
+  ];
+
+  const zTetromino = [
+    [1, 2, width + 2, width + 3],
+    [3, width + 3, width + 2, width * 2 + 2],
+    [1, 2, width + 2, width + 3],
+    [3, width + 3, width + 2, width * 2 + 2],
+  ];
+
+  const sTetromino = [
+    [1, 2, width, width + 1],
+    [2, width + 1, width + 2, width * 2 + 1],
+    [1, 2, width, width + 1],
+    [2, width + 1, width + 2, width * 2 + 1],
+  ];
+
+  const jTetromino = [
+    [1, 2, width + 2, width * 2 + 2],
+    [width, width + 1, width + 2, 2],
+    [1, width + 1, width * 2 + 1, width * 2 + 2],
+    [width, width + 1, width + 2, width * 2],
+  ];
+});
