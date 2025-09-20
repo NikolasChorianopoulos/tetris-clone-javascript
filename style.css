@@ -1,13 +1,23 @@
+body {
+  min-height: 50vh;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
 .grid {
   width: 200px;
   height: 400px;
-  background-color: black;
   display: flex;
+  background-color: aliceblue;
   flex-wrap: wrap;
 }
 
 .grid div {
   width: 20px;
   height: 20px;
-  background-color: grey;
+}
+
+.tetromino {
+  background-color: blue;
 }

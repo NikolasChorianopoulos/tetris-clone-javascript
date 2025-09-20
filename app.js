@@ -6,25 +6,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const width = 10;
 
   //tetris shapes
-  const lTetromino = [
+  const jTetromino = [
     [1, width + 1, width * 2 + 1, 2],
     [width, width + 1, width + 2, width * 2 + 2],
     [1, width + 1, width * 2 + 1, width * 2],
-    [width, width * 2, width * 2 + 1, width * 2 + 2],
+    [0, width, width + 1, width + 2],
   ];
 
   const oTetromino = [
-    [1, 2, width + 1, width + 2],
-    [1, 2, width + 1, width + 2],
-    [1, 2, width + 1, width + 2],
-    [1, 2, width + 1, width + 2],
+    [0, 1, width, width + 1],
+    [0, 1, width, width + 1],
+    [0, 1, width, width + 1],
+    [0, 1, width, width + 1],
   ];
 
   const iTetromino = [
     [1, width + 1, width * 2 + 1, width * 3 + 1],
     [width, width + 1, width + 2, width + 3],
-    [0, width, width * 2, width * 3],
     [1, width + 1, width * 2 + 1, width * 3 + 1],
+    [width, width + 1, width + 2, width + 3],
   ];
 
   const tTetromino = [
@@ -35,23 +35,101 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   const zTetromino = [
-    [1, 2, width + 2, width + 3],
-    [3, width + 3, width + 2, width * 2 + 2],
-    [1, 2, width + 2, width + 3],
-    [3, width + 3, width + 2, width * 2 + 2],
+    [width, width + 1, width * 2 + 1, width * 2 + 2],
+    [1, width + 1, width, width * 2],
+    [width, width + 1, width * 2 + 1, width * 2 + 2],
+    [1, width + 1, width, width * 2],
   ];
 
   const sTetromino = [
-    [1, 2, width, width + 1],
-    [2, width + 1, width + 2, width * 2 + 1],
-    [1, 2, width, width + 1],
-    [2, width + 1, width + 2, width * 2 + 1],
+    [width + 1, width + 2, width * 2, width * 2 + 1],
+    [1, width + 1, width + 2, width * 2 + 2],
+    [width + 1, width + 2, width * 2, width * 2 + 1],
+    [1, width + 1, width + 2, width * 2 + 2],
   ];
 
-  const jTetromino = [
-    [1, 2, width + 2, width * 2 + 2],
-    [width, width + 1, width + 2, 2],
+  const lTetromino = [
+    [0, 1, width + 1, width * 2 + 1],
+    [2, width + 2, width + 1, width],
     [1, width + 1, width * 2 + 1, width * 2 + 2],
-    [width, width + 1, width + 2, width * 2],
+    [width, width * 2, width + 1, width + 2],
   ];
+
+  const allTetrominos = [
+    jTetromino,
+    oTetromino,
+    iTetromino,
+    tTetromino,
+    zTetromino,
+    sTetromino,
+    lTetromino,
+  ];
+
+  let currentPosition = 4;
+  let currentRotation = 0;
+
+  //select a random tetromino and its first rotation
+  let random = Math.floor(Math.random() * allTetrominos.length);
+
+  let current = allTetrominos[random][currentRotation];
+
+  //draw the tetromino
+  function draw() {
+    current.forEach((index) =>
+      squares[currentPosition + index].classList.add("tetromino")
+    );
+  }
+
+  //undraw the tetromino
+  function undraw() {
+    current.forEach((index) =>
+      squares[currentPosition + index].classList.remove("tetromino")
+    );
+  }
+
+  //tetromino fall down every second
+  function moveDown() {
+    undraw();
+    currentPosition += width;
+    draw();
+    freeze();
+  }
+
+  timerId = setInterval(moveDown, 1000);
+
+  //freeze the tetromino
+  function freeze() {
+    if (
+      current.some((index) =>
+        squares[currentPosition + index + width].classList.contains("taken")
+      )
+    ) {
+      current.forEach((index) =>
+        squares[currentPosition + index].classList.add("taken")
+      );
+      random = Math.floor(Math.random() * allTetrominos.length);
+      current = allTetrominos[random][currentRotation];
+      currentPosition = 4;
+      draw();
+    }
+  }
+
+  //set left,right boundaries
+  function moveLeft() {
+    undraw();
+    const isAtLeftEdge =
+      current.some((index) => currentPosition + index) % width === 0;
+
+    if (!isAtLeftEdge) currentPosition -= 1;
+
+    if (
+      current.some((index) =>
+        squares[currentPosition + index].classList.contains("taken")
+      )
+    ) {
+      currentPosition += 1;
+    }
+
+    draw();
+  }
 });
